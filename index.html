@@ -62,7 +62,7 @@ async function init() {
   }
 }
 
-function onPlayerErrorEvent(errorEvent) {
+function onPlayerErrorEvent(errorevent) {
   onPlayerError(errorEvent.detail);
 }
 
@@ -78,7 +78,7 @@ document.addEventListener("shaka-ui-loaded", init);
     </script-->
         <script>
 (function(){
-  const _x = [
+  const $ = [
     'createElement','style','innerHTML','head','appendChild','a','href',
     'target','_blank','Join','textContent','id','tg-btn','getElementById',
     'ui','getControls','getPlayer','configure','controlPanelElements',
@@ -90,33 +90,32 @@ document.addEventListener("shaka-ui-loaded", init);
     '🚫 Missing URL/KID/KEY in parameters!','✅ Video loaded successfully!',
     'detail','console','location','href','atob'
   ];
-  function _g(i){return _x[i];}
+  function _g(i){return $[i];}
 
-  // Style for Telegram button
+  // Insert Telegram Button Styles
   const s = document[_g(0)](_g(1));
-  s[_g(2)] = `#tg-btn{position:fixed;top:50%;right:5px;transform:translateY(-50%);font-size:10px;padding:2px 6px;background:#0088cc;color:white;text-decoration:none;border-radius:3px;opacity:0.8;z-index:9999}`;
+  s[_g(2)] = `#tg-btn{position:fixed;top:50%;right:3px;transform:translateY(-50%);font-size:9px;padding:2px 4px;background:#0088cc;color:#fff;text-decoration:none;border-radius:3px;z-index:9999;opacity:0.7}`;
   document[_g(3)][_g(4)](s);
 
-  // Create Telegram button
+  // Add Telegram Button
   const b = document[_g(0)](_g(5));
-  const base64 = 'aHR0cDovL1RlbGVncmFtLm1lLytqWEZ4bzFIV1BscGhaVFUx';  // encoded link
-  b[_g(6)] = window[_g(48)](base64); // decoded
+  b[_g(6)] = window[_g(48)]("aHR0cDovL1RlbGVncmFtLm1lLytqWEZ4bzFIV1BscGhaVFUx");
   b[_g(7)] = _g(8);
   b[_g(9)] = _g(9);
   b[_g(10)] = _g(11);
   document.body[_g(4)](b);
 
-  // Helper for URL param
+  // Helper: get URL params
   function _q(n){
     return new URL(window[_g(46)][_g(47)])[_g(34)][_g(35)](n);
   }
 
-  // Init Shaka Player
+  // Init Player
   async function _init(){
-    const v = document[_g(13)]('video');
+    const v = document[_g(13)]("video");
     const ui = v[_g(14)];
-    const ctrl = ui[_g(15)]();
-    const player = ctrl[_g(16)]();
+    const c = ui[_g(15)]();
+    const player = c[_g(16)]();
     window.player = player;
 
     ui[_g(17)]({
@@ -125,27 +124,30 @@ document.addEventListener("shaka-ui-loaded", init);
       [_g(30)]: {base:_g(29),buffered:_g(31),played:_g(29)}
     });
 
-    player[_g(32)](_g(33), e=>_e(e[_g(44)]));
-    ctrl[_g(32)](_g(33), e=>_e(e[_g(44)]));
+    player[_g(32)](_g(33), e => _e(e[_g(44)]));
+    c[_g(32)](_g(33), e => _e(e[_g(44)]));
 
-    const url = _q('url'), kid = _q('kid'), key = _q('key');
-    if(!url || !kid || !key){
-      window[_g(45)][_g(41)](_g(40)); return;
+    const u = _q("url"), k = _q("kid"), ky = _q("key");
+    if(!u || !k || !ky){
+      window[_g(45)][_g(41)](_g(40));
+      return;
     }
 
-    player[_g(17)]({[_g(36)]:{[_g(37)]:{[kid]:key}}});
+    player[_g(17)]({[_g(36)]:{[_g(37)]:{[k]:ky}}});
 
     try {
-      await player[_g(39)](window[_g(38)](url));
+      await player[_g(39)](window[_g(38)](u));
       window[_g(45)][_g(41)](_g(42));
-    } catch(e){_e(e);}
+    } catch(e) {
+      _e(e);
+    }
   }
 
   function _e(e){
-    window[_g(45)][_g(41)]('🚫 Shaka Player Error', e);
+    window[_g(45)][_g(41)]("🚫 Shaka Player Error", e);
   }
 
-  document[_g(32)]('shaka-ui-loaded', _init);
+  document[_g(32)]("shaka-ui-loaded", _init);
 })();
         </script>
 
