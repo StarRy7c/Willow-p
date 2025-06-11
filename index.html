@@ -30,6 +30,71 @@ async function init() {
   player.addEventListener("error", onPlayerErrorEvent);
   controls.addEventListener("error", onUIErrorEvent);
 
+  // MPD and DRM info
+  const mpdUrl = "https://ABDNTQGAAAAAAAAMDRJK7AJ77NDL7.otte.live.cf.ww.aiv-cdn.net/syd-nitro/live/clients/dash/enc/uugw0qkwob/out/v1/acfdcf2dabd24075bb615c6c19ba9bd4/cenc.mpd";
+  const kid = "ec2147a4b9b1b87ee3d8dc6915bc7928";
+  const key = "c84fcd82767a9cd9e2e0c0d1b47a72c5";
+
+  player.configure({
+    drm: {
+      clearKeys: {
+        [kid]: key
+      }
+    }
+  });
+
+  try {
+    await player.load(mpdUrl);
+    console.log("✅ Video loaded successfully!");
+  } catch (e) {
+    onPlayerError(e);
+  }
+}
+
+function onPlayerErrorEvent(errorEvent) {
+  onPlayerError(errorEvent.detail);
+}
+
+function onPlayerError(error) {
+  console.error("🚫 Shaka Player Error", error);
+}
+
+function onUIErrorEvent(errorEvent) {
+  onPlayerError(errorEvent.detail);
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+        <!--script>
+let player, ui;
+
+async function init() {
+  const video = document.getElementById("video");
+  ui = video.ui;
+  const controls = ui.getControls();
+  player = controls.getPlayer();
+  window.player = player;
+
+  ui.configure({
+    controlPanelElements: [
+      "play_pause", "mute", "volume", "spacer",
+      "time_and_duration", "picture_in_picture",
+      "fullscreen", "overflow_menu"
+    ],
+    volumeBarColors: {
+      base: "rgba(255, 0, 150, 0.7)",
+      level: "rgba(0, 204, 255, 0.7)"
+    },
+    seekBarColors: {
+      base: "rgba(0, 204, 255, 0.7)",
+      buffered: "rgba(255, 0, 150, 0.7)",
+      played: "rgba(0, 204, 255, 0.7)"
+    }
+  });
+
+  player.addEventListener("error", onPlayerErrorEvent);
+  controls.addEventListener("error", onUIErrorEvent);
+
   // Manually set MPD URL, KID, and KEY
   const mpdurl = "https://ABDNTQGAAAAAAAAMDRJK7AJ77NDL7.otte.live.cf.ww.aiv-c.net/syd-nitro/live/clients/dash/enc/uugw0qkwob/out/v1/ac2dabd24075bb615c6c19ba9bd4/cenc.mpd";
   const kid = "ec2147a4b9b1b87ee3d8dc6915bc7928";
@@ -64,7 +129,7 @@ function onUIErrorEvent(errorEvent) {
 }
 
 document.addEventListener("shaka-ui-loaded", init);
-</script><!--script>
+    </script--><!--script>
 let player, ui;
 
 // Function to get URL parameters easily
